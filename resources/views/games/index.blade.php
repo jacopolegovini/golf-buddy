@@ -14,6 +14,28 @@
                     + Crea nuova partita
                 </a>
             </div>
+            <form method="GET" action="{{ route('games.index') }}" class="mb-6">
+                <div class="flex gap-3 items-center">
+                    <select name="club_id" class="border rounded px-3 py-2">
+                        <option value="">Tutti i club</option>
+                        @foreach($clubs as $club)
+                            <option value="{{ $club->id }}"
+                                {{ request('club_id') == $club->id ? 'selected' : '' }}>
+                                {{ $club->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                    <button type="submit"
+                            class="bg-gray-700 text-white px-4 py-2 rounded hover:bg-gray-800">
+                        Filtra
+                    </button>
+                    @if(request('club_id'))
+                        <a href="{{ route('games.index') }}" class="text-gray-500 hover:underline">
+                            Rimuovi filtro
+                        </a>
+                    @endif
+                </div>
+            </form>
 
             @forelse($games as $game)
                 <div class="bg-white shadow rounded-lg p-6 mb-4">

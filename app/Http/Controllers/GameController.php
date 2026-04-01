@@ -11,10 +11,17 @@ class GameController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $games = Game::with(['club', 'creator', 'players'])->get();
-        return view('games.index', compact('games'));
+        $clubs = Club::orderBy('name')->get();
+
+        $games = Game::with(['club', 'creator', 'players'])
+            ->when($request->club_id, function ($query) use ($request) {
+                $query->where('club_id', $request->club_id);
+            })
+            ->get();
+
+        return view('games.index', compact('games', 'clubs'));
     }
 
     /**
@@ -42,6 +49,7 @@ class GameController extends Controller
         $validated['user_id'] = auth()->id();
 
         $game = Game::create($validated);
+        $game->players()->attach(auth()->id());
 
         return redirect()->route('games.show', $game)
                         ->with('success', 'Partita creata con successo!');
@@ -75,9 +83,17 @@ class GameController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Game $game)
     {
-        //
+        if (auth()->id() !== $game->user_id) {
+            return redirect()->route('games.index')
+                            ->with('error', 'Non sei autorizzato a cancellare questa partita.');
+        }
+
+        $game->delete();
+
+        return redirect()->route('games.index')
+                        ->with('success', 'Partita cancellata.');
     }
 
     public function join(Game $game)

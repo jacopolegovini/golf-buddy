@@ -13,6 +13,11 @@
                     {{ session('success') }}
                 </div>
             @endif
+            @if(session('error'))
+                <div class="bg-red-100 text-red-700 px-4 py-3 rounded mb-4">
+                    {{ session('error') }}
+                </div>
+            @endif
 
             <div class="bg-white shadow rounded-lg p-6">
 
@@ -69,6 +74,17 @@
                     @else
                         <p class="text-red-500">Partita al completo</p>
                     @endif
+                @endif
+
+                @if(auth()->id() === $game->user_id)
+                    <form method="POST" action="{{ route('games.destroy', $game) }}" class="mt-4"
+                        onsubmit="return confirm('Sei sicuro di voler cancellare questa partita?')">
+                        @csrf
+                        @method('DELETE')
+                        <button class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">
+                            Cancella partita
+                        </button>
+                    </form>
                 @endif
 
                 <div class="mt-4">
