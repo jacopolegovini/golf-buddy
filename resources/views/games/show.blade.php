@@ -25,7 +25,7 @@
                 <p class="text-gray-500 text-sm mb-6">Creata da {{ $game->creator->name }}</p>
 
                 <div class="mb-4">
-                    <span class="font-semibold">Data:</span> {{ $game->date }}
+                    <span class="font-semibold">Data:</span> {{ $game->date->translatedFormat('j F Y') }}
                 </div>
                 <div class="mb-4">
                     <span class="font-semibold">Tee time:</span> {{ $game->tee_time }}

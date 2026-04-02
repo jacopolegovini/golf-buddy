@@ -42,7 +42,7 @@
                     <div class="flex justify-between items-center">
                         <div>
                             <h3 class="text-lg font-semibold">{{ $game->club->name }}</h3>
-                            <p class="text-gray-600">{{ $game->date }} alle {{ $game->tee_time }}</p>
+                            <p class="text-gray-600">{{ $game->date->translatedFormat('j F Y') }} alle {{ $game->tee_time }}</p>
                             <p class="text-gray-500 text-sm">
                                 Creata da {{ $game->creator->name }} —
                                 {{ $game->players->count() }}/{{ $game->max_players }} giocatori

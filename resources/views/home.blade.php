@@ -59,7 +59,7 @@
                 <div>
                     <p class="font-semibold">{{ $game->club->name }}</p>
                     <p class="text-gray-500 text-sm">
-                        {{ $game->date }} alle {{ $game->tee_time }} —
+                        {{ $game->date->translatedFormat('j F Y') }} alle {{ $game->tee_time }} —
                         {{ $game->players->count() }}/{{ $game->max_players }} giocatori
                     </p>
                 </div>

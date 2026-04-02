@@ -15,6 +15,10 @@ class Game extends Model
         'notes',
     ];
 
+    protected $casts = [
+        'date' => 'date',
+    ];
+
     public function creator()
     {
         return $this->belongsTo(User::class, 'user_id');

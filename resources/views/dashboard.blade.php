@@ -25,7 +25,7 @@
                         <div>
                             <p class="font-medium">{{ $game->club->name }}</p>
                             <p class="text-gray-500 text-sm">
-                                {{ $game->date }} alle {{ $game->tee_time }} —
+                                {{ $game->date->translatedFormat('j F Y') }} alle {{ $game->tee_time }} —
                                 {{ $game->players->count() }}/{{ $game->max_players }} giocatori
                             </p>
                         </div>
@@ -49,7 +49,7 @@
                     @forelse($clubGames as $game)
                         <div class="flex justify-between items-center py-3 border-b last:border-0">
                             <div>
-                                <p class="font-medium">{{ $game->date }} alle {{ $game->tee_time }}</p>
+                                <p class="font-medium">{{ $game->date->translatedFormat('j F Y') }} alle {{ $game->tee_time }}</p>
                                 <p class="text-gray-500 text-sm">
                                     Creata da {{ $game->creator->name }} —
                                     {{ $game->players->count() }}/{{ $game->max_players }} giocatori
