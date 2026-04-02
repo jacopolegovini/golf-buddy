@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>⛳ Golf Buddy</title>
+        <title>Golf Buddy</title>
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
@@ -15,7 +15,7 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100">
+        <div class="min-h-screen bg-gray-100 flex flex-col">
             @include('layouts.navigation')
 
             <!-- Page Heading -->
@@ -28,9 +28,23 @@
             @endisset
 
             <!-- Page Content -->
-            <main>
+            <main class="flex-1">
                 {{ $slot }}
             </main>
+
+            {{-- Footer --}}
+            <footer class="bg-white border-t border-gray-200 mt-12">
+                <div class="max-w-7xl mx-auto px-6 py-8 flex flex-col sm:flex-row justify-between items-center gap-4">
+                    <span class="text-xl font-bold text-green-700">⛳ Golf Buddy</span>
+                    <p class="text-gray-500 text-sm text-center">
+                        Fatto con ☕ da <span class="font-medium text-gray-700">Jacopo</span> —
+                        {{ now()->year }}
+                    </p>
+                    <p class="text-gray-400 text-xs">
+                        Tutti i diritti riservati
+                    </p>
+                </div>
+            </footer>
         </div>
     </body>
 </html>
