@@ -16,8 +16,10 @@ class ProfileController extends Controller
      */
     public function edit(Request $request): View
     {
+        $clubs = \App\Models\Club::orderBy('name')->get();
         return view('profile.edit', [
             'user' => $request->user(),
+            'clubs' => $clubs,
         ]);
     }
 

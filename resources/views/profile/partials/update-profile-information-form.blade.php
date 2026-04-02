@@ -47,6 +47,21 @@
             @endif
         </div>
 
+        <div>
+            <x-input-label for="club_id" :value="__('Club di appartenenza')" />
+            <select id="club_id" name="club_id"
+                    class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                <option value="">-- Nessun club --</option>
+                @foreach($clubs as $club)
+                    <option value="{{ $club->id }}"
+                        {{ old('club_id', $user->club_id) == $club->id ? 'selected' : '' }}>
+                        {{ $club->name }}
+                    </option>
+                @endforeach
+            </select>
+            <x-input-error class="mt-2" :messages="$errors->get('club_id')" />
+        </div>
+
         <div class="flex items-center gap-4">
             <x-primary-button>{{ __('Save') }}</x-primary-button>
 
