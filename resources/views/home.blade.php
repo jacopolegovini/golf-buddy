@@ -1,24 +1,4 @@
-<!DOCTYPE html>
-<html lang="it">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Golf Buddy</title>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-</head>
-<body class="bg-gray-50 text-gray-800">
-
-    {{-- Navbar --}}
-    <nav class="bg-white shadow px-6 py-4 flex justify-between items-center">
-        <span class="text-xl font-bold text-green-700">⛳ Golf Buddy</span>
-        <div class="space-x-4">
-            <a href="{{ route('login') }}" class="text-gray-600 hover:text-green-700">Accedi</a>
-            <a href="{{ route('register') }}"
-               class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
-                Registrati
-            </a>
-        </div>
-    </nav>
+<x-public-layout>
 
     {{-- Hero --}}
     <div class="text-center py-20 px-6">
@@ -43,7 +23,7 @@
                     <p class="text-gray-500 text-sm">{{ $club->holes }} buche</p>
                     <p class="mt-3 text-sm font-medium">
                         {{ $club->games_count }}
-                        {{ $club->games_count === 1 ? 'partita' : 'partite' }} in programma
+                        {{ $club->games_count == 1 ? 'partita' : 'partite' }} in programma
                     </p>
                 </div>
             @endforeach
@@ -53,7 +33,6 @@
     {{-- Prossime partite --}}
     <div class="max-w-5xl mx-auto px-6 pb-20">
         <h2 class="text-2xl font-semibold mb-6">Prossime partite</h2>
-
         @forelse($upcomingGames as $game)
             <div class="bg-white shadow rounded-lg p-5 mb-4 flex justify-between items-center">
                 <div>
@@ -63,8 +42,7 @@
                         {{ $game->players->count() }}/{{ $game->max_players }} giocatori
                     </p>
                 </div>
-                <a href="{{ route('login') }}"
-                   class="text-green-600 hover:underline text-sm">
+                <a href="{{ route('login') }}" class="text-green-600 hover:underline text-sm">
                     Accedi per unirti →
                 </a>
             </div>
@@ -72,6 +50,4 @@
             <p class="text-gray-500">Nessuna partita in programma al momento.</p>
         @endforelse
     </div>
-
-</body>
-</html>
+</x-public-layout>

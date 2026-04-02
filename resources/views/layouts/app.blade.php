@@ -33,18 +33,7 @@
             </main>
 
             {{-- Footer --}}
-            <footer class="bg-white border-t border-gray-200 mt-12">
-                <div class="max-w-7xl mx-auto px-6 py-8 flex flex-col sm:flex-row justify-between items-center gap-4">
-                    <span class="text-xl font-bold text-green-700">⛳ Golf Buddy</span>
-                    <p class="text-gray-500 text-sm text-center">
-                        Fatto con ☕ da <span class="font-medium text-gray-700">Jacopo</span> —
-                        {{ now()->year }}
-                    </p>
-                    <p class="text-gray-400 text-xs">
-                        Tutti i diritti riservati
-                    </p>
-                </div>
-            </footer>
+            @include('partials.footer')
         </div>
     </body>
 </html>
