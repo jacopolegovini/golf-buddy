@@ -16,10 +16,13 @@ class GameController extends Controller
         $clubs = Club::orderBy('name')->get();
 
         $games = Game::with(['club', 'creator', 'players'])
-            ->when($request->club_id, function ($query) use ($request) {
-                $query->where('club_id', $request->club_id);
-            })
-            ->get();
+        ->where('date', '>=', today())
+        ->when($request->club_id, function ($query) use ($request) {
+            $query->where('club_id', $request->club_id);
+        })
+        ->orderBy('date')
+        ->orderBy('tee_time')
+        ->get();
 
         return view('games.index', compact('games', 'clubs'));
     }
@@ -98,6 +101,10 @@ class GameController extends Controller
 
     public function join(Game $game)
     {
+        if (auth()->id() === $game->user_id) {
+            return back()->with('error', 'Non puoi iscriverti alla tua stessa partita.');
+        }
+
         if ($game->players->count() >= $game->max_players) {
             return back()->with('error', 'Partita al completo.');
         }
