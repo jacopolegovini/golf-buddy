@@ -1,58 +1,138 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# ⛳ Golf Buddy
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+**Golf Buddy** è un'applicazione web che permette ai giocatori di golf di organizzare e trovare compagni di gioco. Gli utenti possono creare partite, iscriversi a quelle degli altri e gestire il proprio profilo con il club di appartenenza.
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Funzionalità
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- **Registrazione e autenticazione** — sistema di login completo con recupero password
+- **Gestione partite** — crea, visualizza e cancella partite con data, orario e numero massimo di giocatori
+- **Iscrizione alle partite** — unisciti alle partite di altri giocatori o abbandonale
+- **Filtro per club** — sfoglia le partite disponibili filtrando per campo da golf
+- **Dashboard personale** — visualizza le tue prossime partite e quelle del tuo club di appartenenza
+- **Profilo utente** — aggiorna i tuoi dati e il club di appartenenza
+- **Landing page pubblica** — vetrina dei club disponibili e delle prossime partite per gli utenti non registrati
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## Stack tecnologico
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+| Layer | Tecnologia |
+|---|---|
+| Backend | Laravel 12 |
+| Frontend | Blade + Tailwind CSS |
+| Autenticazione | Laravel Breeze |
+| Database | SQLite (sviluppo) / MySQL (produzione) |
+| Asset bundling | Vite |
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+---
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+## Struttura del database
 
-## Agentic Development
+```
+clubs
+├── id
+├── name
+├── city
+├── holes
+└── timestamps
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+users
+├── id
+├── name
+├── email
+├── password
+├── club_id (FK → clubs)
+└── timestamps
 
-```bash
-composer require laravel/boost --dev
+games
+├── id
+├── user_id (FK → users)
+├── club_id (FK → clubs)
+├── date
+├── tee_time
+├── max_players
+├── notes
+└── timestamps
 
-php artisan boost:install
+game_user (pivot)
+├── game_id (FK → games)
+└── user_id (FK → users)
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+---
 
-## Contributing
+## Installazione in locale
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### Requisiti
 
-## Code of Conduct
+- PHP 8.2+
+- Composer
+- Node.js 18+
+- npm
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### Procedura
 
-## Security Vulnerabilities
+```bash
+# Clona il repository
+git clone https://github.com/tuo-username/golf-buddy.git
+cd golf-buddy
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+# Installa le dipendenze PHP
+composer install
 
-## License
+# Installa le dipendenze JavaScript
+npm install
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+# Copia il file di configurazione
+cp .env.example .env
+
+# Genera la chiave dell'applicazione
+php artisan key:generate
+
+# Esegui le migration
+php artisan migrate
+
+# Avvia il server di sviluppo
+php artisan serve
+
+# In un terminale separato, compila gli asset
+npm run dev
+```
+
+Apri il browser su `http://localhost:8000`.
+
+---
+
+## Variabili d'ambiente
+
+Copia `.env.example` in `.env` e configura le variabili principali:
+
+```env
+APP_NAME="Golf Buddy"
+APP_ENV=local
+APP_DEBUG=true
+APP_URL=http://localhost
+
+DB_CONNECTION=sqlite
+```
+
+Per la produzione imposta:
+
+```env
+APP_ENV=production
+APP_DEBUG=false
+```
+
+---
+
+## Deploy
+
+Il progetto è configurato per il deploy su [Railway](https://railway.app). Consulta la documentazione ufficiale di Railway per i dettagli sulla configurazione.
+
+---
+
+## Crediti
+
+Sviluppato da **Jacopo** — © 2026
